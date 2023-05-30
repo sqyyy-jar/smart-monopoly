@@ -5,6 +5,7 @@ micronaut:
   server:
     port: 8080
     host: 0.0.0.0
+    idle-timeout: 1h
 
 netty:
   default:
