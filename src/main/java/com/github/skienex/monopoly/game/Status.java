@@ -1,4 +1,5 @@
 package com.github.skienex.monopoly.game;
+
 public enum Status {
     SUCCESS("Success"),
     ALREADY_LOGGED_IN("You are already logged in"),
@@ -20,6 +21,7 @@ public enum Status {
     DISMANTLE_OTHER_THINKS_FIRST("You have to dismantle other thinks first"),
     NO_HOUSE_ON_STREET("You dont have a house to dismantle on this street"),
     PLAYER_DISCONNECTED("A player disconnected"),
+    NO_NAME_DEFINED("You have to pick a name"),
     PLACEHOLDER("PLACEHOLDER");
 
     private final String message;

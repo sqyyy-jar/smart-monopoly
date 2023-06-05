@@ -38,7 +38,8 @@ public class PlayerSocket {
     @OnMessage
     public void onMessage(ClientPacket packet, WebSocketSession session) {
         switch (packet) {
-            case ClientPacket.KeepAlive keepAlive -> {}
+            case ClientPacket.KeepAlive keepAlive -> {
+            }
             case ClientPacket.Login login -> {
                 boolean admin;
                 UUID id;
@@ -46,6 +47,9 @@ public class PlayerSocket {
                     if (sessions.containsKey(session)) {
                         session.sendAsync(ServerPacket.error(Status.ALREADY_LOGGED_IN));
                         return;
+                    }
+                    if (login.name.isBlank()) {
+                        session.sendAsync(ServerPacket.error(Status.NO_NAME_DEFINED));
                     }
                     id = UUID.randomUUID();
                     sessions.put(session, id);
@@ -150,10 +154,11 @@ public class PlayerSocket {
                         return;
                     }
                     Status status = manager.buyStreet(activePlayer);
-                    if (status != Status.SUCCESS) {
-                        session.sendAsync(ServerPacket.error(status));
-                        return;
-                    }
+                    session.sendAsync(ServerPacket.error(status));
+                    session.sendAsync(new ServerPacket.Money(activePlayer.getMoney()));
+
+                    FieldData data = manager.fieldData(activePlayer);
+                    session.sendAsync(new ServerPacket.FieldData(data));
                 }
             }
             case ClientPacket.SellStreet sellStreet -> {
@@ -169,10 +174,11 @@ public class PlayerSocket {
                         return;
                     }
                     Status status = manager.sellStreet(activePlayer);
-                    if (status != Status.SUCCESS) {
-                        session.sendAsync(ServerPacket.error(status));
-                        return;
-                    }
+                    session.sendAsync(ServerPacket.error(status));
+                    session.sendAsync(new ServerPacket.Money(activePlayer.getMoney()));
+
+                    FieldData data = manager.fieldData(activePlayer);
+                    session.sendAsync(new ServerPacket.FieldData(data));
                 }
             }
             case ClientPacket.BuyHouse buyHouse -> {
@@ -188,10 +194,11 @@ public class PlayerSocket {
                         return;
                     }
                     Status status = manager.buyHouse(activePlayer);
-                    if (status != Status.SUCCESS) {
-                        session.sendAsync(ServerPacket.error(status));
-                        return;
-                    }
+                    session.sendAsync(ServerPacket.error(status));
+                    session.sendAsync(new ServerPacket.Money(activePlayer.getMoney()));
+
+                    FieldData data = manager.fieldData(activePlayer);
+                    session.sendAsync(new ServerPacket.FieldData(data));
                 }
             }
             case ClientPacket.SellHouse sellHouse -> {
@@ -207,10 +214,11 @@ public class PlayerSocket {
                         return;
                     }
                     Status status = manager.sellHouse(activePlayer);
-                    if (status != Status.SUCCESS) {
-                        session.sendAsync(ServerPacket.error(status));
-                        return;
-                    }
+                    session.sendAsync(ServerPacket.error(status));
+                    session.sendAsync(new ServerPacket.Money(activePlayer.getMoney()));
+
+                    FieldData data = manager.fieldData(activePlayer);
+                    session.sendAsync(new ServerPacket.FieldData(data));
                 }
             }
 //            case ClientPacket.SpecialField specialField -> {

@@ -92,7 +92,7 @@ public class GameManager {
             // Spieler bestitz Feld schon
             return new FieldData.OwnedByPlayer(pos,
                     street.name(), player.getId(), street.rent()[street.level() - 1],
-                    street.cost()[street.level() - 1], street.cost()[street.level() - 1] / 2, false);
+                    street.cost()[street.level()], street.cost()[street.level() - 1] / 2, false);
         } else {
             if (street.owner() != null) {
                 payRent(player);

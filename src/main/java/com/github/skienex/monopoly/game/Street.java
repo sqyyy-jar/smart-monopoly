@@ -35,7 +35,7 @@ public class Street {
         return owner;
     }
 
-    public void owner(Player player) {
+    public void owner(Player owner) {
         this.owner = owner;
     }
 
@@ -46,6 +46,7 @@ public class Street {
     public void levelUp() {
         level++;
     }
+
     public void levelDown() {
         level--;
     }
